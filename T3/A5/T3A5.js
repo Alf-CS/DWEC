@@ -106,8 +106,14 @@ console.log(validarFecha('31/02/2024')); // Salida: null
 console.log('--------------- APARTADO 3 -----------------');
 
 function validarURL(url) {
-    return false;
+    // Expresión regular para la URL
+    const expReg= /^(https?:\/\/)?((([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})+)+(:\d+)?(\/[\w\-\/]*)?(\?([\w\-]+=[\w\-]+(&[\w\-]+=[\w\-]+)*)?)?$/;
+    // const expReg = /(https?:\/\/)?([a-zA-Z0-9-]+\.[a-zA-Z]{2,})+(:\d+)?(\/[\w\-\/]*)?(\?([\w\-]+=[\w\-]+(&[\w\-]+=[\w\-]+)*)?)?/;
+    // const expReg = /(https?:\/\/)?([a-zA-Z0-9-]+\.[a-zA-Z]{2,})(:\d+)?(\/[\w\-\/]*)?(\?([\w\-]+=[\w\-]+(&[\w\-]+=[\w\-]+)*)?)?/;
+    // const regex = /^(https?:\/\/)?([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+)(:\d+)?(\/[\w\-\/]*)?(\?([\w\-]+=[\w\-]+(&[\w\-]+=[\w\-]+)*)?)?$/;
+    return expReg.test(url); // Retorna true si la URL coincide con la expresión regular
 }
+
 
 console.log(validarURL("https://example.com")); // Salida: true
 console.log(validarURL("https://example.com:8080/")); // Salida: true
@@ -115,6 +121,7 @@ console.log(validarURL("https://example.com/path")); // Salida: true
 console.log(validarURL("https://example.com/path?arg1=1")); // Salida: true
 console.log(validarURL("https://example.com/path?arg1=1&arg2=2")); // Salida: true
 console.log(validarURL("invalid-url")); // Salida: false
+console.log(validarURL("https://otro.ex?ample.com/path")); // Salida: true - esto debería dar mal.
 
 /**
  * Apartado 4
