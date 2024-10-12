@@ -35,7 +35,52 @@ console.log('--------------- APARTADO 2 -----------------');
 
 function validarFecha(fecha) {
     
+
+
+        // Expresiones regulares para los tres formatos
+        const formato1 = /^(\d{2})\/(\d{2})\/(\d{4})$/;  // DD/MM/AAAA
+        const formato2 = /^(\d{2})-(\d{2})-(\d{4})$/;   // MM-DD-AAAA
+        const formato3 = /^(\d{4})\.(\d{2})\.(\d{2})$/; // AAAA.MM.DD
+    
+        let dia, mes, año;
+    
+        // Validar formato DD/MM/AAAA
+        if (formato1.test(fecha)) {
+            const [, d, m, a] = fecha.match(formato1);
+            dia = parseInt(d);
+            mes = parseInt(m) - 1; // Los meses van de 0 a 11 en JavaScript
+            año = parseInt(a);
+        }
+        // Validar formato MM-DD-AAAA
+        else if (formato2.test(fecha)) {
+            const [, m, d, a] = fecha.match(formato2);
+            dia = parseInt(d);
+            mes = parseInt(m) - 1;
+            año = parseInt(a);
+        }
+        // Validar formato AAAA.MM.DD
+        else if (formato3.test(fecha)) {
+            const [, a, m, d] = fecha.match(formato3);
+            dia = parseInt(d);
+            mes = parseInt(m) - 1;
+            año = parseInt(a);
+        } else {
+            return null; // Si no coincide con ninguno de los formatos, retorna null
+        }
+    
+        // Crear objeto Date
+        const fechaObj = new Date(año, mes, dia);
+    
+        // Comprobar si la fecha es válida (si no se ha desbordado, por ejemplo, 32/13/2020)
+        if (fechaObj.getFullYear() === año && 
+            fechaObj.getMonth() === mes && 
+            fechaObj.getDate() === dia) {
+            return fechaObj; // Fecha válida
+        }
+    
+    // Ejemplos de uso
     return null;
+
 }
 
 console.log(validarFecha('23/09/2024')); // Salida: Date object
