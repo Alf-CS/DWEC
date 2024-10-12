@@ -105,15 +105,37 @@ console.log(validarFecha('31/02/2024')); // Salida: null
 
 console.log('--------------- APARTADO 3 -----------------');
 
-function validarURL(url) {
+
+function validarURLMareMagnum(url) {
     // Expresión regular para la URL
     const expReg= /^(https?:\/\/)?((([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})+)+(:\d+)?(\/[\w\-\/]*)?(\?([\w\-]+=[\w\-]+(&[\w\-]+=[\w\-]+)*)?)?$/;
-    // const expReg = /(https?:\/\/)?([a-zA-Z0-9-]+\.[a-zA-Z]{2,})+(:\d+)?(\/[\w\-\/]*)?(\?([\w\-]+=[\w\-]+(&[\w\-]+=[\w\-]+)*)?)?/;
     // const expReg = /(https?:\/\/)?([a-zA-Z0-9-]+\.[a-zA-Z]{2,})(:\d+)?(\/[\w\-\/]*)?(\?([\w\-]+=[\w\-]+(&[\w\-]+=[\w\-]+)*)?)?/;
-    // const regex = /^(https?:\/\/)?([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+)(:\d+)?(\/[\w\-\/]*)?(\?([\w\-]+=[\w\-]+(&[\w\-]+=[\w\-]+)*)?)?$/;
+    // const expReg = /^(https?:\/\/)?([a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+)(:\d+)?(\/[\w\-\/]*)?(\?([\w\-]+=[\w\-]+(&[\w\-]+=[\w\-]+)*)?)?$/;
     return expReg.test(url); // Retorna true si la URL coincide con la expresión regular
 }
 
+
+function validarURL(url) {
+    // Definimos partes de la expresión regular como variables
+    const proto = 'https?:\\/\\/'; // Protocolo (http o https)  //OJO - NECESITAMOS UN '\' PARA EL '\'; PATRON: http:// o https://
+    const host = '[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)+'; // Dominio (mínimo 2 partes)
+    const puerto = '(\\:\\d+)?'; // Puerto (opcional)  -- El '\\' delante de ':' es para asegurarnos, aunque funciona sin este ESCAPE.
+    const path = '(\\/[\\w\\-\\/]*)?'; // Path (opcional)
+    const parametros = '(\\?([\\w\\-]+=[\\w\\-]+(&[\\w\\-]+=[\\w\\-]+)*)?)?'; // Parámetros (opcional)
+
+    // Crear la expresión regular completa utilizando las variables
+    // const regexString = `^(${protocolo})?(${dominio})(${puerto})(${path})(${parametros})?$`;
+    // el formato es: <PROTO>://<HOST>[:<PORT>]/[PATH][?PARAM1=VALOR1[&PARAM2=VALOR2]]
+    const regexString = `^(${proto})?(${host})(${puerto})(${path})(${parametros})?$`;
+    // IMPORTANTE - PONER '^' al principio y '$' al final para que considere TODA LA CADENA y no coincidencias parciales dentro de ella.
+    // protocolo puede estar o no estar --> ?
+    // dominio con mínimo 2 partes --> mínimo tiene que tener un '.'
+
+    // Convertimos la cadena a una expresión regular con el constructor RegExp
+    const expReg = new RegExp(regexString);
+
+    return expReg.test(url); // Retorna true si la URL coincide con la expresión regular
+}
 
 console.log(validarURL("https://example.com")); // Salida: true
 console.log(validarURL("https://example.com:8080/")); // Salida: true
@@ -121,7 +143,8 @@ console.log(validarURL("https://example.com/path")); // Salida: true
 console.log(validarURL("https://example.com/path?arg1=1")); // Salida: true
 console.log(validarURL("https://example.com/path?arg1=1&arg2=2")); // Salida: true
 console.log(validarURL("invalid-url")); // Salida: false
-console.log(validarURL("https://otro.ex?ample.com/path")); // Salida: true - esto debería dar mal.
+//console.log(validarURL("https://otro.ex?ample.com/path")); // Salida:false
+//console.log(validarURL("https://good-example.com/path")); // Salida: true
 
 /**
  * Apartado 4
