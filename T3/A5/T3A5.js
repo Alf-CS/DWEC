@@ -193,7 +193,14 @@ function analizarLogs(logs) {               // return { ip: '', hora: '', metodo
 
     return returnObj;
 }
-
+/*
 const resultado = analizarLogs(logs);
 
-console.log(resultado);
+console.log(resultado);*/
+
+const logObj = analizarLogs(logs);
+
+console.log(logObj);
+
+
+
