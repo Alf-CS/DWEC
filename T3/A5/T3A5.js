@@ -16,7 +16,7 @@ function extraerHashtagsMenciones(texto) {
     // #[\w]+: Encuentra cualquier cadena que empiece con # seguida de caracteres alfanuméricos (mayúsculas, minúsculas, números y _).
     // MODIFICADOR /g GLOBAL para que no se quede solo con la primera coincidencia.
     const menciones = texto.match(/@[\w]+/g) || [];
-    // @[\w]+: Encuentra cualquier cadena que empiece con # seguida de caracteres alfanuméricos (mayúsculas, minúsculas, números y _).
+    // @[\w]+: Encuentra cualquier cadena que empiece con @ seguida de caracteres alfanuméricos (mayúsculas, minúsculas, números y _).
     return { hashtags, menciones };
 }
 
@@ -120,21 +120,18 @@ function validarURL(url) {
     const proto = 'https?:\\/\\/'; // Protocolo (http o https)  //OJO - NECESITAMOS UN '\' PARA EL '\'; PATRON: http:// o https://
     const host = '[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)+'; // Dominio (mínimo 2 partes)
     const puerto = '(\\:\\d+)?'; // Puerto (opcional)  -- El '\\' delante de ':' es para asegurarnos, aunque funciona sin este ESCAPE.
-    const path = '(\\/[\\w\\-\\/]*)?'; // Path (opcional)
+    const path = '(\\/[\\w\\-\\/]*)?'; // Path (opcional) ¿Tiene que ser siempre la palabra PATH?? --> Cambiar
     const parametros = '(\\?([\\w\\-]+=[\\w\\-]+(&[\\w\\-]+=[\\w\\-]+)*)?)?'; // Parámetros (opcional)
 
     // Crear la expresión regular completa utilizando las variables
-    // const regexString = `^(${protocolo})?(${dominio})(${puerto})(${path})(${parametros})?$`;
     // el formato es: <PROTO>://<HOST>[:<PORT>]/[PATH][?PARAM1=VALOR1[&PARAM2=VALOR2]]
-    const regexString = `^(${proto})?(${host})(${puerto})(${path})(${parametros})?$`;
+    const expRegString = `^(${proto})?(${host})(${puerto})(${path})(${parametros})?$`;
     // IMPORTANTE - PONER '^' al principio y '$' al final para que considere TODA LA CADENA y no coincidencias parciales dentro de ella.
     // protocolo puede estar o no estar --> ?
     // dominio con mínimo 2 partes --> mínimo tiene que tener un '.'
 
-    // Convertimos la cadena a una expresión regular con el constructor RegExp
-    const expReg = new RegExp(regexString);
-
-    return expReg.test(url); // Retorna true si la URL coincide con la expresión regular
+    const expReg = new RegExp(expRegString);                // Convertimos la cadena a una expresión regular con el constructor RegExp
+    return expReg.test(url);                                // Retorna true si la URL coincide con la expresión regular
 }
 
 console.log(validarURL("https://example.com")); // Salida: true
@@ -143,8 +140,8 @@ console.log(validarURL("https://example.com/path")); // Salida: true
 console.log(validarURL("https://example.com/path?arg1=1")); // Salida: true
 console.log(validarURL("https://example.com/path?arg1=1&arg2=2")); // Salida: true
 console.log(validarURL("invalid-url")); // Salida: false
-//console.log(validarURL("https://otro.ex?ample.com/path")); // Salida:false
-//console.log(validarURL("https://good-example.com/path")); // Salida: true
+// console.log(validarURL("https://otro.ex?ample.com/path")); // Salida:false
+// console.log(validarURL("https://good-example.com/path")); // Salida: true
 
 /**
  * Apartado 4
@@ -169,10 +166,34 @@ const logs = [
     '192.0.2.8 - - [23/Sep/2024:10:33:59 +0000] "DELETE /api/user/123 HTTP/1.1" 204 0'
 ];
 
-function analizarLogs(log) {
-    return { ip: '', hora: '', metodo: '', url: '', status: 0, tamano: 0 };
+
+function analizarLineaLog(log) {    // Expresión regular para extraer la información de UNA LINEA del log
+    const regex = /^(\d+\.\d+\.\d+\.\d+) - - \[(.+)\] "(GET|POST|PUT|DELETE) (.+?) HTTP\/[0-9.]+" (\d{3}) (\d+|-)$/;
+    const match = log.match(regex); // Vemos si la expresión regular coincide con el log
+    
+    if (match) {  // Si coincide, devolvemos un objeto con las propiedades extraídas
+        return {  /* OJO, el número dentro de match[n] corresponde al orden de los paréntesis de captura en la expresión regular, no al contenido general de la expresión. */
+            ip: match[1],                               // IP  (\d+\.\d+\.\d+\.\d+)
+            hora: match[2],                             // Fecha y hora (.+)
+            metodo: match[3],                           // El método HTTP (GET, POST, PUT, DELETE)  (GET|POST|PUT|DELETE)
+            url: match[4],                              // URL  (.+?)
+            código: parseInt(match[5]),                 // Código             (\d{3}) 
+            tamaño: parseInt(match[6])                  // Tamaño (\d+|-)
+        };
+    } else {
+        return null; // Si no coincide con el formato esperado, devuelve null
+    }
 }
 
-const logObj = [];
+function analizarLogs(logs) {               // return { ip: '', hora: '', metodo: '', url: '', status: 0, tamano: 0 };
+    let returnObj = [];                         // Inicializamos array para almacenar los resultados
+    logs.forEach(log => {                       // Recorremos cada log en el array 'logs'
+        returnObj.push(analizarLineaLog(log));  // Añadimos el resultado de analizar cada línea del log
+    });
 
-console.log(logObj);
+    return returnObj;
+}
+
+const resultado = analizarLogs(logs);
+
+console.log(resultado);
