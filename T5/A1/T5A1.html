@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulación DOM - Búsqueda e Iteración</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        section, div {
+            padding: 15px;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            background-color: #f4f4f4;
+        }
+        table, tr, td {border: #ccc solid 1px; border-collapse: collapse;}
+        .underline { text-decoration: underline;}
+        .bold { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header id="#cabecera-busqueda">
+        <h1>Manipulación del DOM con JavaScript</h1>
+        <nav>
+            <ul>
+                <li><a>inicio</a></li>
+                <li><a>id</a></li>                
+
+                <!-- Comentario entorpecedor -->
+                <li><a>clase</a></li>
+                <!-- Comentario entorpecedor -->
+                <li><a>etiqueta</a></li>
+
+                <li><a>selector</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Sección de búsqueda por ID -->
+    <section id="busqueda-por-id">
+        <h2>Búsqueda por ID</h2>
+        <p>De una parte, D. <span id="cliente-nombre">Pepe García Fernández</span>, con DNI <span id="cliente-nif">12345678-A</span>, de ahora en adelante EL CLIENTE.</p>
+    </section>
+
+    <!-- Sección de búsqueda por clase e iteración -->
+    <section id="busqueda-por-clase">
+        <h2 class="titulo">Búsqueda por clase e Iteración</h2>
+        <div>
+            <p><span class="pista">Ja</span>más perdió un duelo, ni tampoco <span class="pista">va</span>cilo ante un rival.</p>
+            <p><span class="pista">S</span>iempre <span class="pista">cr</span>eerán en él.</p>
+        </div>
+        <p><cite>C<span class="pista">i</span>en <span class="pista">p</span>resun<span class="pista">t</span>os culpables</cite> fue escrito por J. K. Fisher.</p>
+    </section>
+
+    <!-- Sección de búsqueda por etiqueta e iteración -->
+    <section id="busqueda-por-etiqueta">
+        <h2>Búsqueda por etiqueta e Iteración</h2>
+        <ul id="lista-compra">
+            <li><label><input type="checkbox">Patatas</label></li>
+            <li><label><input type="checkbox">Cebolla</label></li>
+            <li><label><input type="checkbox">Zanahoria</label></li>
+            <li><label><input type="checkbox">Coliflor</label></li>
+        </ul>
+    </section>
+
+    <!-- Sección de búsqueda por selector o selectores CSS -->
+    <section id="busqueda-por-selector">
+        <h2>Búsqueda por Selectores CSS (querySelector / querySelectorAll)</h2>
+        <form action="#">
+            <label>Nombre completo: <input type="text" required></label><br>
+            <label>Correo electrónico: <input type="email" required></label><br>
+            <label>Teléfono: <input type="tel" required></label><br>
+            <label>Nivel de experiencia: 
+                <select id="nivel" name="nivel" required>
+                    <option value="">Seleccione...</option>
+                    <option value="principiante">Principiante</option>
+                    <option value="intermedio">Intermedio</option>
+                    <option value="avanzado">Avanzado</option>
+                </select>
+            </label><br>
+            <label>Aficiones:</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="aficiones" value="naturaleza"> Fotografía de naturaleza</label>
+                <label><input type="checkbox" name="aficiones" value="retratos"> Fotografía de retratos</label>
+                <label><input type="checkbox" name="aficiones" value="paisajes"> Fotografía de paisajes</label>
+                <label><input type="checkbox" name="aficiones" value="macro"> Fotografía macro</label>
+                <label><input type="checkbox" name="aficiones" value="urbana"> Fotografía urbana</label>
+            </div>
+            <label>Fecha de nacimiento: <input type="date" required><br></label><br>
+            <button type="submit">Registrarse</button><br>
+        </form>
+        <div id="selector-id">
+            <ul>
+                <li class="selected"><label><input type="checkbox" name="alumno1" checked>Alumno 1</label></li>
+                <li class="selected"><label><input type="checkbox" name="alumno2" checked>Alumno 2</label></li>
+                <li class="selected"><label><input type="checkbox" name="alumno3" checked>Alumno 3</label></li>
+                <li class="selected"><label><input type="checkbox" name="alumno4" checked>Alumno 4</label></li>
+                <li><label><input type="checkbox" name="alumno5">Alumno 5</label></li>
+                <li><label><input type="checkbox" name="alumno6">Alumno 6</label></li>
+                <li><label><input type="checkbox" name="alumno7">Alumno 7</label></li>
+                <li><label><input type="checkbox" name="alumno8">Alumno 8</label></li>
+                
+            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Alumno</th>
+                        <th>DAW</th>
+                        <th>DIW</th>
+                        <th>DWEC</th>
+                        <th>DWES</th>
+                        <th>EIE</th>
+                        <th>IT2</th>
+                        <th>FCT</th>
+                        <th>PROYECTO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Alumno 1</td>
+                        <td>8.5</td>
+                        <td>9.0</td>
+                        <td>7.5</td>
+                        <td>8.0</td>
+                        <td>7.0</td>
+                        <td>9.0</td>
+                        <td>Apto</td>
+                        <td>8.5</td>
+                    </tr>
+                    <tr>
+                        <td class="selected">Alumno 2</td>
+                        <td class="selected">7.0</td>
+                        <td class="selected">8.0</td>
+                        <td class="selected">8.5</td>
+                        <td class="selected">9.0</td>
+                        <td class="selected">6.5</td>
+                        <td class="selected">8.0</td>
+                        <td class="selected">Apto</td>
+                        <td class="selected">9.0</td>
+                    </tr>
+                    <tr>
+                        <td>Alumno 3</td>
+                        <td>9.5</td>
+                        <td>7.5</td>
+                        <td>9.0</td>
+                        <td>9.5</td>
+                        <td>8.0</td>
+                        <td>9.5</td>
+                        <td>Apto</td>
+                        <td>9.0</td>
+                    </tr>
+                    <tr>
+                        <td>Alumno 4</td>
+                        <td>6.0</td>
+                        <td>7.0</td>
+                        <td>6.5</td>
+                        <td>7.0</td>
+                        <td>6.0</td>
+                        <td>7.5</td>
+                        <td>Apto</td>
+                        <td>7.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Sección para identificar los hijos de un elemento -->
+    <section>
+        <h2>Identificar los hijos de un elemento</h2>
+        <div class="hijo">
+            <h3>Hijo 1</h3>
+            <p>Este es el primer hijo</p>
+            <p>Y tiene 3 hermanos</p>
+            <p>Siendo este el último</p>
+        </div>
+        <div class="hijo">Hijo 2</div>
+        <div class="hijo">Hijo 3</div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023. Todos los derechos reservados.</p>
+    </footer>
+</body>
+<script src="T5A1.js"></script>
+</html>
