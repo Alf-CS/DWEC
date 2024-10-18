@@ -110,20 +110,19 @@ elementosPista.forEach(elemento => {
     elemento.style.color = "red"; // Aplica el color rojo al texto
     textoConcatenado += elemento.textContent + " "; 
 });
-console.log(textoConcatenado.replace(/\s+/g, ' ').trim()); // ¿cómo se quitan los espacios????
+console.log(textoConcatenado.replace(/\s+/g, '');
 
 */
 
 const elementosPista = document.getElementsByClassName("pista"); // Selecciona todos los elementos con la clase "pista"
 let textoConcatenado = ""; // Inicializa una variable vacía para almacenar el texto concatenado
-// Convierte la colección HTML a un array para poder usar forEach
-Array.from(elementosPista).forEach(elemento => {
+Array.from(elementosPista).forEach(elemento => {  // OJO, HAY QUE CONVERTIR la colección HTML a un array para poder usar forEach
+    elemento.style.color ="red"
     textoConcatenado += elemento.textContent + " "; // Concatenar el texto de cada elemento, separado por un espacio
 });
 
-// Elimina los espacios intermedios y muestra el texto concatenado
-const textoSinEspaciosIntermedios = textoConcatenado.replace(/\s+/g, ' ').trim();
-console.log(textoSinEspaciosIntermedios); // Muestra el texto concatenado sin espacios intermedios
+const textoSinEspaciosIntermedios = textoConcatenado.replace(/\s+/g, ''); // Elimina los espacios intermedios
+console.log(textoSinEspaciosIntermedios); // Muestra el texto
 
 
 
@@ -134,6 +133,17 @@ console.log(textoSinEspaciosIntermedios); // Muestra el texto concatenado sin es
  */
 
 console.log('--------------- APARTADO 4 -----------------');
+const elementoListaCompra = document.getElementById("lista-compra");
+const inputsHijos = elementoListaCompra.querySelectorAll("input"); // Selecciona todos los elementos input que son hijos de "lista-compra"
+Array.from(inputsHijos).forEach(elemento => {
+    // Apuntamos al texto en el label padre en el que está el input
+    const textoLabel = elemento.parentElement.textContent.trim();    
+    // Si el texto del label empieza con 'C', marca el checkbox como seleccionado
+    if (textoLabel.startsWith('C')) {
+        elemento.checked = true;
+    }
+});
+
 
 
 /**
@@ -143,12 +153,33 @@ console.log('--------------- APARTADO 4 -----------------');
  */
 
 console.log('--------------- APARTADO 5 -----------------');
+const inputTel = document.querySelector('input[type="tel"]'); // Selecciona el primer input con type="tel"
+if (inputTel) {
+    inputTel.value = "666112233"; // Asignamos el valor al input
+}
+
+
 
 
 /**
  * Apartado 6
- * Realzia una búsqueda por selector CSS de los elementos de la clase seleccionados que pertenezcan a la tabla. Modifica su contenido aumentando
+ * Realzia una búsqueda por selector CSS de los elementos de la clase seleccionados (selected?) que pertenezcan a la tabla. Modifica su contenido aumentando
  * 1 punto donde sea posible.
  */
 
 console.log('--------------- APARTADO 6 -----------------');
+
+
+// Selecciona todos los elementos con clase 'selected' dentro de una tabla(da igual si es td o th)
+const elementosSelected = document.querySelectorAll('table .selected');
+
+elementosSelected.forEach(elemento => {
+    let numero = parseFloat(elemento.textContent); // Convertimos el contenido a número
+    if (!isNaN(numero)) { // Verifica que se ha convertido un número. Un texto dará NaN
+        console.log (numero);
+        numero = numero +1;
+        if (numero>10) {numero=10};
+        elemento.textContent = numero; // Suma 1 al número (10 como máximo) y lo actualiza en el DOM
+    }
+});
+
