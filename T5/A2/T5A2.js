@@ -39,7 +39,7 @@ document.body.insertBefore(headerElement, mainElement);     // Insertamos el <he
 // Añadimos el <h1> dentro de <section id="intro">
 let sectionIntro = document.querySelector('#intro');        // Buscar la sección con id="intro"
 let h1Element = document.createElement('h1');               // Crear un nuevo elemento <h1>
-let h1Text = document.createTextNode("Bienvenidos al ");    // Crear el texto (nodo) para el h1
+let h1Text = document.createTextNode("Javascript: ");    // Crear el texto (nodo) para el h1
 let abbrElement = document.createElement('abbr');               // Crear el elemento <abbr> con el texto "DOM"
 abbrElement.setAttribute('title', 'Document Object Model');         // Establecemos el atributo
 let abbrText = document.createTextNode("DOM");                      // Creamos el texto (nodo) "DOM"
@@ -83,17 +83,17 @@ spanElement.appendChild(spanText);
     // Añadimos elemento <span> al párrafo paragElement
 paragElement.appendChild(spanElement);
 
-        // Añadimos clases al elemento <span>  --Más rápido que anidar toda la estructura que estamos usando
+        // Añadimos clases al elemento <span>  --Más rápido que repetir y anidar toda la estructura que hemos estamos usando hasta ahora.
 spanElement.classList.add('highlight', 'underline', 'size-120');
 
 // Añadir el <span> al párrafo
 paragElement.appendChild(spanElement);
 
-// Añadimos la última parte "creando elemento, por ejemplo:"
+// Añadimos la última parte de [["creando elemento, por ejemplo:"]]
 let paragText3=document.createTextNode(" creando elementos, por ejemplo:");
 paragElement.appendChild(paragText3);
 
-//añadimos el elemento <p> a la sección "intro"
+//añadimos el elemento <p> a la sección "intro" (con TODO lo que tiene dentro)
 sectionIntro.appendChild(paragElement);
 
 
@@ -111,6 +111,8 @@ sectionIntro.appendChild(codeElement);
  * Crea la sección con id "lista-compra". Crea los productos de manera dinámica mediante un bucle.
  */
 
+// SIMILAR AL APARTADO 1 DEL EJ T5A1???
+
 const listaCompra = [
     { producto: 'Leche', comprado: false },
     { producto: 'Carne', comprado: true },
@@ -119,6 +121,46 @@ const listaCompra = [
     { producto: 'Zanahoria', comprado: false },
     { producto: 'Coliflor', comprado: true },
 ]
+
+// Crear la sección "lista-compra"
+let listaCompraSectionElement = document.createElement('section');  // Crear el elemento <section>
+listaCompraSectionElement.setAttribute('id', 'lista-compra');       // Añadir id="lista-compra"
+
+// Crear el h1 dentro de la sección "lista-compra"
+let h1Element2 = document.createElement('h1');                      // Crear el elemento <h1>
+let h1Text2 = document.createTextNode("Lista de la compra");         // Crear el nodo de texto "Lista de la compra"
+h1Element2.appendChild(h1Text2);                                    // Añadir el texto al <h1>
+
+// Añadir el <h1> dentro de la sección "lista-compra"
+listaCompraSectionElement.appendChild(h1Element2); 
+
+
+// Crear <ul> para la lista de compra
+let ulElement = document.createElement('ul');  // Crear el elemento <ul>
+
+// Iterando sobre los productos en listaCompra y crear <li> con checkbox e información
+listaCompra.forEach(item => {
+    let liElement = document.createElement('li');            // Crear el elemento <li>
+    let labelElement = document.createElement('label');       // Crear el elemento <label>
+    let checkboxElement = document.createElement('input');    // Crear el checkbox
+    checkboxElement.setAttribute('type', 'checkbox');         // Establecer tipo checkbox
+    checkboxElement.checked = item.comprado;                  // Marcar si el producto ya está comprado
+
+    let labelText = document.createTextNode(item.producto);   // Crear el texto del producto
+
+    labelElement.appendChild(checkboxElement);                // Añadir el checkbox dentro del label
+    labelElement.appendChild(labelText);                      // Añadir el nombre del producto al label
+
+    liElement.appendChild(labelElement);                      // Añadir el label al <li>
+    ulElement.appendChild(liElement);                         // Añadir el <li> a la <ul>
+});
+
+// Añadir la lista <ul> a la sección "lista-compra"
+listaCompraSectionElement.appendChild(ulElement);  // Añadir <ul> a la sección
+
+// Añadir la sección "lista-compra" dentro de <main> como hija de la sección anterior
+mainElement.appendChild(listaCompraSectionElement); // Insertar dentro de <main>
+  //sectionIntro.parentElement.appendChild (listaCompraSectionElement); //un poco demasiado enrevesado pero funcionaba.
 
 
 /**
@@ -132,3 +174,12 @@ const notasAlumnos = [
     { nombre: 'Alumno 3', notas: [ 9.5, 7.5, 9, 9.5, 8, 9.5, false, 9 ] },
     { nombre: 'Alumno 4', notas: [ 6, 7, 6.5, 7, 6, 7.5, true, 7 ] },
 ]
+
+
+// Crear la sección "notas-alumnos"
+let notasAlumnosElement = document.createElement('section');  // Crear el elemento <section>
+notasAlumnosElement.setAttribute('id', 'notas-alumnos');       // Añadir id="lista-compra"
+
+
+// Añadir la sección "notas-alumnos" dentro de <main> como hija de la sección anterior
+mainElement.appendChild(notasAlumnosElement); // Insertar dentro de <main>
