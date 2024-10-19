@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>Creación: DOM</title>
+        <link href="T5A2.css" type="text/css" rel="stylesheet">
+    </head>
+    <body class="container">
+        <header>
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Acerca de...</a></li>
+                    <li><a href="#">Contacta</a></li>
+                </ul>
+            </nav>
+            <form id="search">
+                <input type="text" autocomplete="on" placeholder="Search...">
+                <input type="button" value="Search">
+            </form>
+        </header>
+        <main>
+            <section id="intro">
+                <h1>JavaScript: <abbr title="Document Object Model">DOM</abbr></h1>
+                <img src="https://desarrolloweb.com/storage/tag_images/actual/3BpUDBsC3ofBy4torT1ZiUF6hdonqpRH841MeMDM.png" alt="Imagen de javascript">
+                <p>
+                    Estamos aprendiendo <strong>JavaScript</strong>, en concreto a manipular el <span class="highlight underline size-120">DOM</span> creando elementos, por ejemplo:
+                </p>
+                <code>
+                    const myElemento = document.createElement(&lt;etiqueta&gt;); // el parámetro sin &lt;&gt; y como cadena de texto
+                </code>
+            </section>
+
+            <section id="lista-compra">
+                <h1>Lista de la compra</h1>
+                <ul>
+                    <li><label><input type="checkbox">Leche</label></li>
+                    <li><label><input type="checkbox" checked>Carne</label></li>
+                    <li><label><input type="checkbox">Patatas</label></li>
+                    <li><label><input type="checkbox" checked>Cebolla</label></li>
+                    <li><label><input type="checkbox">Zanahoria</label></li>
+                    <li><label><input type="checkbox" checked>Coliflor</label></li>
+                </ul>
+            </section>
+
+            <section id="notas-alumnos">
+                <h1>Tabla de alumnos</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Alumno</th>
+                            <th>DAW</th>
+                            <th>DIW</th>
+                            <th>DWEC</th>
+                            <th>DWES</th>
+                            <th>EIE</th>
+                            <th>IT2</th>
+                            <th>FCT</th>
+                            <th>PROYECTO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alumno 1</td>
+                            <td>8.5</td>
+                            <td>9.0</td>
+                            <td>7.5</td>
+                            <td>8.0</td>
+                            <td>7.0</td>
+                            <td>9.0</td>
+                            <td>Apto</td>
+                            <td>8.5</td>
+                        </tr>
+                        <tr>
+                            <td>Alumno 2</td>
+                            <td>7.0</td>
+                            <td>8.0</td>
+                            <td>8.5</td>
+                            <td>9.0</td>
+                            <td>6.5</td>
+                            <td>8.0</td>
+                            <td>Apto</td>
+                            <td>9.0</td>
+                        </tr>
+                        <tr>
+                            <td>Alumno 3</td>
+                            <td>9.5</td>
+                            <td>7.5</td>
+                            <td>9.0</td>
+                            <td>9.5</td>
+                            <td>8.0</td>
+                            <td>9.5</td>
+                            <td>No apto</td>
+                            <td>9.0</td>
+                        </tr>
+                        <tr>
+                            <td>Alumno 4</td>
+                            <td>6.0</td>
+                            <td>7.0</td>
+                            <td>6.5</td>
+                            <td>7.0</td>
+                            <td>6.0</td>
+                            <td>7.5</td>
+                            <td>Apto</td>
+                            <td>7.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </body>
+</html>

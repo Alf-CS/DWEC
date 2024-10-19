@@ -176,10 +176,9 @@ const elementosSelected = document.querySelectorAll('table .selected');
 elementosSelected.forEach(elemento => {
     let numero = parseFloat(elemento.textContent); // Convertimos el contenido a número
     if (!isNaN(numero)) { // Verifica que se ha convertido un número. Un texto dará NaN
-        console.log (numero);
-        numero = numero +1;
-        if (numero>10) {numero=10};
-        elemento.textContent = numero; // Suma 1 al número (10 como máximo) y lo actualiza en el DOM
+        numero = numero +1;   // Sumamos 1 si es un número
+        if (numero>10) {numero=10};   //Máxima nota es un 10
+        elemento.textContent = numero; //actualización en el DOM
     }
 });
 

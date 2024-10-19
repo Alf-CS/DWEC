@@ -1,0 +1,10 @@
+.container { width: 80%; margin: auto; }
+#main-header { display: flex; align-items: center; background-color: lightgray;  }
+#search { display: inline; margin-left: auto; padding-right: 1em; }
+#nav-menu  { flex-grow: 1; padding-left: 1em; }
+#nav-menu > ul  { padding-left: 0px; }
+#nav-menu a  { text-decoration: none; }
+#nav-menu li { display: inline-block; margin-right: 10px; flex-grow: 1;}
+.highlight { background-color: yellow; }
+.underline { text-decoration: underline;}
+table, tr, td {border: #ccc solid 1px; border-collapse: collapse; text-align: center;}
