@@ -59,18 +59,52 @@ imgElement.setAttribute('alt', 'Imagen de javascript');
 
 sectionIntro.appendChild(imgElement); // Añadir la imagen después del <h1>
 
+// AÑADIR ELEMENTO <p>
+
+let paragElement = document.createElement('p');  // Creamos el elemento <p>
+
+let paragText=document.createTextNode("Estamos aprendiendo ");
+paragElement.appendChild(paragText);
+
+// Creamos el elemento <strong> para "Javascript"
+let strongElement = document.createElement('strong');   
+let strongText = document.createTextNode("Javascript");
+strongElement.appendChild(strongText);
+    // Añadimos elemento <strong> al párrafo paragElement
+paragElement.appendChild(strongElement);
+
+let paragText2=document.createTextNode(", en concreto a manipular el ");
+paragElement.appendChild(paragText2);
+
+// elemento DOM en span
+let spanElement = document.createElement('span');
+let spanText = document.createTextNode("DOM");
+spanElement.appendChild(spanText);
+    // Añadimos elemento <span> al párrafo paragElement
+paragElement.appendChild(spanElement);
+
+        // Añadimos clases al elemento <span>  --Más rápido que anidar toda la estructura que estamos usando
+spanElement.classList.add('highlight', 'underline', 'size-120');
+
+// Añadir el <span> al párrafo
+paragElement.appendChild(spanElement);
+
+// Añadimos la última parte "creando elemento, por ejemplo:"
+let paragText3=document.createTextNode(" creando elementos, por ejemplo:");
+paragElement.appendChild(paragText3);
+
+//añadimos el elemento <p> a la sección "intro"
+sectionIntro.appendChild(paragElement);
 
 
+// AÑADIR ELEMENTO <code>.
 
+let codeElement = document.createElement('code');  // Creamos el elemento <code>
+let codeText = document.createTextNode("const myElemento = document.createElement(<etiqueta>); // el parámetro sin <> y como cadena de texto");
+codeElement.appendChild(codeText);
+sectionIntro.appendChild(codeElement);
 
-
-
-
-
-
-
-
-
+// TERMINADA section "intro"
 
 /**
  * Apartado 4
