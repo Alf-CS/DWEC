@@ -122,7 +122,7 @@ const listaCompra = [
     { producto: 'Coliflor', comprado: true },
 ]
 
-// Crear la sección "lista-compra"
+if(true){ // Crear la SECCION "lista-compra"         // QUITAR EL if-true
 let listaCompraSectionElement = document.createElement('section');  // Crear el elemento <section>
 listaCompraSectionElement.setAttribute('id', 'lista-compra');       // Añadir id="lista-compra"
 
@@ -133,7 +133,6 @@ h1Element2.appendChild(h1Text2);                                    // Añadir e
 
 // Añadir el <h1> dentro de la sección "lista-compra"
 listaCompraSectionElement.appendChild(h1Element2); 
-
 
 // Crear <ul> para la lista de compra
 let ulElement = document.createElement('ul');  // Crear el elemento <ul>
@@ -161,7 +160,7 @@ listaCompraSectionElement.appendChild(ulElement);  // Añadir <ul> a la sección
 // Añadir la sección "lista-compra" dentro de <main> como hija de la sección anterior
 mainElement.appendChild(listaCompraSectionElement); // Insertar dentro de <main>
   //sectionIntro.parentElement.appendChild (listaCompraSectionElement); //un poco demasiado enrevesado pero funcionaba.
-
+}                                                   // QUITAR EL if-true
 
 /**
  * Apartado 5
@@ -177,9 +176,61 @@ const notasAlumnos = [
 
 
 // Crear la sección "notas-alumnos"
-let notasAlumnosElement = document.createElement('section');  // Crear el elemento <section>
-notasAlumnosElement.setAttribute('id', 'notas-alumnos');       // Añadir id="lista-compra"
+let notasAlumnosSectionElement = document.createElement('section');    // Crear el elemento <section>
+notasAlumnosSectionElement.setAttribute('id', 'notas-alumnos');        // Añadir id="lista-compra"
+
+    let h1NotasElement = document.createElement('h1');                      // Crear el elemento <h1>
+    let h1NotasText = document.createTextNode("Tabla de alumnos");         // Crear el nodo de texto "Lista de la compra"
+    h1NotasElement.appendChild(h1NotasText);
+
+    notasAlumnosSectionElement.appendChild (h1NotasElement);
 
 
-// Añadir la sección "notas-alumnos" dentro de <main> como hija de la sección anterior
-mainElement.appendChild(notasAlumnosElement); // Insertar dentro de <main>
+            // Añadir la sección "notas-alumnos" dentro de <main> como hija
+            mainElement.appendChild(notasAlumnosSectionElement);
+            
+
+
+    // Obtener la referencia del elemento section id='notas-alumnos'
+    let sectionNotasAlumnos = document.querySelector('#notas-alumnos');
+
+    let tableNotasAlumnosElement = document.createElement('table');                      // Crear el elemento <table>
+        let tblBody = document.createElement("tbody");
+            
+            // Creamos la primera fila
+            const encabezadoTabla=['Alumno', 'DAW', 'DIW', 'DWEC','DWES', 'EIE','IT2','FCT','PROYECTO']
+            let hileraEncabezado =document.createElement("tr");
+            encabezadoTabla.forEach (item =>{
+                let celdaEncabezado = document.createElement("th");
+                let textoCeldaEncabezado=document.createTextNode(item);
+                celdaEncabezado.appendChild(textoCeldaEncabezado);
+                hileraEncabezado.appendChild(celdaEncabezado);
+            });
+            tblBody.appendChild(hileraEncabezado);
+
+            // Crea resto de filas/hileras.
+            notasAlumnos.forEach(item =>{
+                let hilera =document.createElement("tr");
+                let celda1 =document.createElement("td");
+                let textoCelda1 =document.createTextNode(item.nombre);
+                celda1.appendChild(textoCelda1);
+                hilera.appendChild(celda1);
+                for(let i=0; i<item.notas.length; i++){
+                    //Vamos a ir creando cada fila
+                    let celda =document.createElement("td");
+                    let textoCelda =document.createTextNode(item.notas[i]);
+                    celda.appendChild(textoCelda);
+                    hilera.appendChild(celda);
+                }
+                tblBody.appendChild(hilera);
+            })
+            
+            
+        
+        tableNotasAlumnosElement.appendChild(tblBody);     // posiciona el <tbody> como hijo del elemento <table>
+            
+    sectionNotasAlumnos.appendChild( tableNotasAlumnosElement); // añadimos <table> dentro de <section id='notas-alumnos'
+            
+    tableNotasAlumnosElement.setAttribute("border", "2"); // modifica el atributo "border" de la tabla y lo fija a "2";
+
+notasAlumnosSectionElement.appendChild(tableNotasAlumnosElement);
