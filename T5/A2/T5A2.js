@@ -111,8 +111,6 @@ sectionIntro.appendChild(codeElement);
  * Crea la sección con id "lista-compra". Crea los productos de manera dinámica mediante un bucle.
  */
 
-// SIMILAR AL APARTADO 1 DEL EJ T5A1???
-
 const listaCompra = [
     { producto: 'Leche', comprado: false },
     { producto: 'Carne', comprado: true },
@@ -122,7 +120,7 @@ const listaCompra = [
     { producto: 'Coliflor', comprado: true },
 ]
 
-if(true){ // Crear la SECCION "lista-compra"         // QUITAR EL if-true
+// Crear la SECCION "lista-compra"
 let listaCompraSectionElement = document.createElement('section');  // Crear el elemento <section>
 listaCompraSectionElement.setAttribute('id', 'lista-compra');       // Añadir id="lista-compra"
 
@@ -160,7 +158,7 @@ listaCompraSectionElement.appendChild(ulElement);  // Añadir <ul> a la sección
 // Añadir la sección "lista-compra" dentro de <main> como hija de la sección anterior
 mainElement.appendChild(listaCompraSectionElement); // Insertar dentro de <main>
   //sectionIntro.parentElement.appendChild (listaCompraSectionElement); //un poco demasiado enrevesado pero funcionaba.
-}                                                   // QUITAR EL if-true
+
 
 /**
  * Apartado 5
@@ -218,8 +216,20 @@ notasAlumnosSectionElement.setAttribute('id', 'notas-alumnos');        // Añadi
                 for(let i=0; i<item.notas.length; i++){
                     //Vamos a ir creando cada fila
                     let celda =document.createElement("td");
-                    let textoCelda =document.createTextNode(item.notas[i]);
-                    celda.appendChild(textoCelda);
+                    
+                    
+                    
+                    if (typeof(item.notas[i]) === 'boolean'){  // Verificamos si el tipo es booleano
+                        let textoCelda =document.createTextNode(item.notas[i]? 'Apto' : 'No apto');
+                        celda.appendChild(textoCelda);
+                    } else{
+                        let textoCelda =document.createTextNode(item.notas[i]);
+                        celda.appendChild(textoCelda);
+                    }              
+
+
+
+                    //celda.appendChild(textoCelda);  //aquí no funciona porque está fuera del ambito del if donde se define textoCelda
                     hilera.appendChild(celda);
                 }
                 tblBody.appendChild(hilera);
