@@ -223,7 +223,9 @@ notasAlumnosSectionElement.setAttribute('id', 'notas-alumnos');        // Añadi
                         let textoCelda =document.createTextNode(item.notas[i]? 'Apto' : 'No apto');
                         celda.appendChild(textoCelda);
                     } else{
-                        let textoCelda =document.createTextNode(item.notas[i]);
+                        //let textoCelda =document.createTextNode(item.notas[i]);   //Quita el decimal cuando es .0
+                        // let textoCelda = document.createTextNode(item.notas[i].toFixed ? item.notas[i].toFixed(1) : item.notas[i]); // Comprobamos si item.notas[i] tiene el método toFixed.
+                        let textoCelda = document.createTextNode(item.notas[i].toFixed(1));
                         celda.appendChild(textoCelda);
                     }              
 
