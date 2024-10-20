@@ -243,6 +243,6 @@ notasAlumnosSectionElement.setAttribute('id', 'notas-alumnos');        // Añadi
             
     sectionNotasAlumnos.appendChild( tableNotasAlumnosElement); // añadimos <table> dentro de <section id='notas-alumnos'
             
-    tableNotasAlumnosElement.setAttribute("border", "2"); // modifica el atributo "border" de la tabla y lo fija a "2";
+    // tableNotasAlumnosElement.setAttribute("border", "2"); // modifica el atributo "border" de la tabla y lo fija a "2";
 
 notasAlumnosSectionElement.appendChild(tableNotasAlumnosElement);
