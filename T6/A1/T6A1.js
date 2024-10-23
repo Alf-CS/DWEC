@@ -50,12 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-}); // CERRAMOS EL DOMContentLoader
-
-
-
-
-
 
 /**
  * Apartado 4
@@ -65,6 +59,33 @@ document.addEventListener('DOMContentLoaded', function() {
  * Nota: Asegúrate de que ningún otro controlador pueda cancelar el evento antes de que este lo procese.
  */
 
+    // Historial de clics
+    const historialClics = [];
+
+    // Manejador del evento de clic izquierdo
+    document.addEventListener('click', function(event) {
+        //event.preventDefault();                               //AQUÍ NO, nos interesa que se hagan los clicks a los enlaces, por ejemplo
+                                                                    // Aunque las pulsaciones de tecla siguen funcionando y llamando a los eventos clicks, aunque estos no se pueden ejecutar cuando está preventDefault()
+        
+        if (event.button === 0) {                                       // Verificamos si el botón presionado es el clic izquierdo (botón 0)
+            const fechaHora = new Date().toLocaleString();                          // Obtenemos la fecha y hora actual
+            const posicionX = window.scrollX;                                       // Obtenemos la posición de la ventana (coordenadas X e Y)
+            const posicionY = window.scrollY;                                       // Obtenemos el elemento HTML en el que se ha hecho click
+            const elementoClicado = event.target.tagName;
+
+            const infoClic = {                                          // Creamos un objeto con la información del clic
+                fechaHora: fechaHora,
+                posicionVentana: { x: posicionX, y: posicionY },
+                elementoClicado: elementoClicado
+            };
+            
+            historialClics.push(infoClic);                              // Almacenamos la información en el historial
+
+            console.log('Historial de clics:', historialClics);         // Mostramos el historial completo por consola
+        }
+    });
+
+}); // CERRAMOS EL DOMContentLoader
 
 
 
