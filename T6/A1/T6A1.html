@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manipulación DOM - Búsqueda e Iteración</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        section, div {
+            padding: 15px;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            background-color: #f4f4f4;
+        }
+        .confidencial { color: black; background-color: black; }
+        #menu-contextual {
+            display: none;
+            position: fixed;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 10000;
+            list-style-type: none;
+            border: 1px solid black;
+        }
+        #menu-contextual li  { padding: 5px; }
+        #menu-contextual li:hover { text-decoration: underline; }
+        #multi-select li.selected { background-color: lime; }
+        #multi-select { user-select: none; }
+    </style>
+    <script src="T6A1.js"></script>
+</head>
+<body>
+    <header id="cabecera">
+        <h1>Manejo de eventos con JavaScript</h1>
+        <nav id="nav-menu">
+            <ul>
+                <li><a href="#cabecera" data-key="F1">Inicio</a></li>
+                <li><a href="#mouse-1" data-key="F2">Eventos del mouse: Entrando y saliendo de zona</a></li>
+
+                <!-- Comentario entorpecedor -->
+                <li><a href="#mouse-2" data-key="F3">Eventos del mouse: Movimiento</a></li>
+                <!-- Comentario entorpecedor -->
+                <li><a href="#mouse-3" data-key="F4">Eventos del mouse: Menú contextual</a></li>
+
+                <li><a href="#mouse-keys" data-key="F5">Eventos del mouse y teclado</a></li>
+                <li><a href="#scroll" data-key="F6">Barra de desplazamiento</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="mouse-1">
+        <h2>Entrando y saliendo de zona</h2>
+        <p>De una parte, D. <span class="confidencial">Pepe García Fernández</span>, con DNI <span class="confidencial">12345678-A</span>, de ahora en adelante EL CLIENTE.</p>
+        <p>De otra parte, D. <span class="confidencial">Sebastian López Gutierrez</span>, con DNI <span class="confidencial">87654321-Z</span>, de ahora en adelante EL PROVEEDOR.</p>
+    </section>
+
+    <section id="mouse-2">
+        <h2>Movimiento</h2>
+        <canvas id="mouse-area" style="background-color: #ccc; width: 100%; height: 200px;"></canvas>
+        <p>Posición relativa a la ventana <span id="mouse-coords-absolute"></span></p>
+        <p>Posición relativa al canvas <span id="mouse-coords-relative"></span></p>
+    </section>
+
+    <section id="mouse-3">
+        <h2>Menú contextual</h2>
+        <ul id="lista-compra">
+            <li><label><input type="checkbox">Patatas</label></li>
+            <li><label><input type="checkbox">Cebolla</label></li>
+            <li><label><input type="checkbox">Zanahoria</label></li>
+            <li><label><input type="checkbox">Coliflor</label></li>
+        </ul>
+    </section>
+
+    <section id="mouse-keys">
+        <h2>Eventos del mouse y teclado</h2>
+        <ul id="multi-select">
+            <li>Alumno 1</li>
+            <li>Alumno 2</li>
+            <li>Alumno 3</li>
+            <li>Alumno 4</li>
+            <li>Alumno 5</li>
+            <li>Alumno 6</li>
+            <li>Alumno 7</li>
+            <li>Alumno 8</li>
+        </ul>
+        <p>Ninguno</p>
+    </section>
+
+    <section id="scroll">
+        <h2>Barra de desplazamiento</h2>
+        <p>Texto inicial</p>
+    </section>
+    <footer>
+        <p>&copy; 2023. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
