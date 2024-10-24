@@ -85,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-}); // CERRAMOS EL DOMContentLoader
 
 
 
@@ -109,6 +108,87 @@ document.addEventListener('DOMContentLoaded', function() {
  * Nota: Se recomienda usar una propiedad no estandard para almacenar la referencia del menú, como por ejemplo, menuOwner.
  * Nota 2: Los elementos añadidos con la opción crear, también deben mostrar el menú y ser funcional.
  */
+
+    const menuContextual = document.getElementById('menu-contextual');
+    let elementoSeleccionado = null;
+
+    // Hay que crear el menú tipo ul desde aquí? tocando el DOM del HTML?
+
+    // Mostrar el menú contextual al hacer clic derecho en un elemento de la lista
+    document.getElementById('lista-compra').addEventListener('contextmenu', function(event) {
+        event.preventDefault(); // Evitamos el menú contextual del navegador
+        elementoSeleccionado = event.target;                                // Guardamos el elemento sobre el cual se hizo clic derecho
+        menuContextual.style.top = `${event.pageY}px`;                      // Posicionamos el menú contextual en el lugar donde se hizo clic
+        menuContextual.style.left = `${event.pageX}px`;
+        menuContextual.style.display = 'block'; // Mostramos el menú
+    });
+
+    // Opción "Añadir" - Añadir un nuevo elemento a la lista
+    document.getElementById('opcion-anadir').addEventListener('click', function() {
+        const nuevoElemento = prompt('Introduce el nuevo elemento de la lista:');
+        if (nuevoElemento) {
+            let liElement = document.createElement('li');            // Crear el elemento <li>
+            let labelElement = document.createElement('label');       // Crear el elemento <label>
+            let checkboxElement = document.createElement('input');    // Crear el checkbox
+            checkboxElement.setAttribute('type', 'checkbox');                   // Establecer tipo checkbox
+            checkboxElement.checked = true;                                     // Vamos a marcar el producto que añadimos
+            let labelText = document.createTextNode(nuevoElemento);   // Crear el texto del producto
+            labelElement.appendChild(checkboxElement);                // Añadir el checkbox dentro del label
+            labelElement.appendChild(labelText);                      // Añadir el nombre del producto al label
+        
+            liElement.appendChild(labelElement);                      // Añadir el label al <li>
+            document.getElementById('lista-compra').appendChild(liElement);
+        }
+        cerrarMenu();   //llamamos a cerrarMenu, para ocultarlo.
+    });
+
+    // Opción "Modificar" - Modificar el elemento seleccionado
+    document.getElementById('opcion-modificar').addEventListener('click', function() {
+        if (elementoSeleccionado) {
+            const nuevoTexto = prompt('Modifica el elemento:', elementoSeleccionado.textContent.trim());             // Obtenemos el nuevo texto del usuario
+                if (nuevoTexto) {
+                    elementoSeleccionado.lastChild.textContent = nuevoTexto; // Modificamos el texto dejando el checkbox intacto
+                }
+        }
+        cerrarMenu();
+    });
+/*
+    // Opción "Eliminar" - Eliminar el elemento seleccionado
+    document.getElementById('opcion-eliminar').addEventListener('click', function() {
+        if (elementoSeleccionado) {
+           // elementoSeleccionado.remove();
+           // elementoSeleccionado=null;     
+           elementoSeleccionado.parentNode.removeChild(elementoSeleccionado);                  // Eliminamos todo el NODO <li> completo, no solo su contenido 
+        }
+        cerrarMenu();
+    });                            //     pero sigue estando el ::marker
+*/
+
+document.getElementById('opcion-eliminar').addEventListener('click', function() {
+    if (elementoSeleccionado) {
+        // Asegurarse de que estamos eliminando el <li> correspondiente  -- podemos estar haciendo click sobre el checkbox o el label
+        let liElement = elementoSeleccionado.closest('li'); // Encuentra el <li> más cercano al elemento seleccionado
+        if (liElement) {
+            liElement.parentNode.removeChild(liElement); // AHORA SI QUE ELIMINAMOS EL <li> COMPLETO
+        }
+    }
+    cerrarMenu(); // Cerramos el menú contextual tras eliminar el elemento
+});
+
+
+
+    // Función para cerrar el menú contextual
+    function cerrarMenu() {
+        menuContextual.style.display = 'none';
+    }
+
+    // Ocultar el menú contextual si se hace clic en cualquier otra parte de la página
+    document.addEventListener('click', function() {
+        cerrarMenu();
+    });
+
+ 
+
 
 
 
@@ -136,4 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
  * Nota: Para calcular si ha llegado al final de la página comprueba que la propiedad scrollY más la altura de la zona de renderizado 
  * sea mayor o igual que la propiedad scrollHeight de documentElement, perteneciente a document.
  */
+
+
+}); // CERRAMOS EL DOMContentLoader
 
