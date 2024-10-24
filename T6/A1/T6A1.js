@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('opcion-eliminar').addEventListener('click', function() {
     if (elementoSeleccionado) {
         // Asegurarse de que estamos eliminando el <li> correspondiente  -- podemos estar haciendo click sobre el checkbox o el label
-        let liElement = elementoSeleccionado.closest('li'); // Encuentra el <li> más cercano al elemento seleccionado
+        let liElement = elementoSeleccionado.closest('li'); // Encuentra el <li> más "cercano" al elemento seleccionado
         if (liElement) {
             liElement.parentNode.removeChild(liElement); // AHORA SI QUE ELIMINAMOS EL <li> COMPLETO
         }
@@ -182,12 +182,42 @@ document.getElementById('opcion-eliminar').addEventListener('click', function() 
         menuContextual.style.display = 'none';
     }
 
-    // Ocultar el menú contextual si se hace clic en cualquier otra parte de la página
+    // Ocultar el menú contextual si se hace clic en cualquier otra parte de la página. TB cierra si se hace clic en el menú pero no en un descendiente.
+/*
     document.addEventListener('click', function() {
         cerrarMenu();
     });
+*/
 
- 
+    // vamos a suponer que queremos que si estamos haciendo click en el menú, no queremos cerrarlo.
+    document.getElementById('lista-compra').addEventListener('click', function(event) {
+        const menu = document.getElementById('menu-contextual');
+        if (!menu.contains(event.target)) {  
+            cerrarMenu();                           // Si el clic no está dentro del menú contextual, se cierra
+        }
+    });
+
+
+    document.getElementById('lista-compra').addEventListener('wheel', function(event) {
+       // event.preventDefault();  // Prevenir el comportamiento por defecto (por ejemplo, evitar el desplazamiento de la página)
+        const menu = document.getElementById('menu-contextual');
+        if (!menu.contains(event.target)) {  
+            cerrarMenu();                           // Si no movemos la rueda dentro del menú contextual, se cierra
+        }
+    });
+/*
+    document.getElementById('lista-compra').addEventListener('contextmenu', function(event) {
+        // Prevenir el menú contextual por defecto
+        event.preventDefault();
+        const menu = document.getElementById('menu-contextual');
+        if (!menu.contains(event.target)) {  
+            cerrarMenu();                           // Si hacemos click derecho de menú contextual fuera del menú
+        }
+    });
+*/    
+
+
+
 
 
 
