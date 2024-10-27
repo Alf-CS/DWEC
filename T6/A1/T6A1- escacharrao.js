@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Historial de clics
     const historialClics = [];
 
-
     // Manejador del evento de clic izquierdo
     document.addEventListener('click', function(event) {
         //event.preventDefault();                               //AQUÍ NO, nos interesa que se hagan los clicks a los enlaces, por ejemplo
@@ -81,9 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             
             historialClics.push(infoClic);                              // Almacenamos la información en el historial
-
-            cerrarMenu();
-            // Cerrar menu contextual de lista-compra si no estamos pulsando sobre un elemento del mismo.
 
             console.log('Historial de clics:', historialClics);         // Mostramos el historial completo por consola
         }
@@ -116,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuContextual = document.getElementById('menu-contextual');
     let elementoSeleccionado = null;
 
-    // Hay que crear el menú tipo ul desde aquí? trasteando el DOM del HTML? --> Para empezar lo ponemos directo en el HTML.
+    // Hay que crear el menú tipo ul desde aquí? tocando el DOM del HTML?
 
     // Mostrar el menú contextual al hacer clic derecho en un elemento de la lista
     document.getElementById('lista-compra').addEventListener('contextmenu', function(event) {
@@ -139,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let labelText = document.createTextNode(nuevoElemento);   // Crear el texto del producto
             labelElement.appendChild(checkboxElement);                // Añadir el checkbox dentro del label
             labelElement.appendChild(labelText);                      // Añadir el nombre del producto al label
+        
             liElement.appendChild(labelElement);                      // Añadir el label al <li>
             document.getElementById('lista-compra').appendChild(liElement);
         }
@@ -178,35 +175,58 @@ document.getElementById('opcion-eliminar').addEventListener('click', function() 
     cerrarMenu(); // Cerramos el menú contextual tras eliminar el elemento
 });
 
+
+
     // Función para cerrar el menú contextual
     function cerrarMenu() {
         menuContextual.style.display = 'none';
     }
 
     // Ocultar el menú contextual si se hace clic en cualquier otra parte de la página. TB cierra si se hace clic en el menú pero no en un descendiente.
-    // Esto ¿no debería entrar en conflicto con el apartado 4? Parece que no y además SIGUE FUNCIONANDO OK incluso si ponemos esta función ANTES de la "hermana" en el apartado 4
-    document.addEventListener('click', function() {     
-        cerrarMenu();  
+
+    // vamos a suponer que queremos que si estamos haciendo click en el menú, no queremos cerrarlo.
+    //document.getElementById('lista-compra').addEventListener('click', function(event) {
+    /*
+    menuContextual.addEventListener('click', function(event) {
+        if (!menuContextual.contains(event.target)) {  
+            cerrarMenu();                           // Si el clic no está dentro del menú contextual, se cierra
+        }
     });
+*/
 
     menuContextual.addEventListener('wheel', function(event) {
         event.preventDefault();  // Prevenir el comportamiento por defecto (por ejemplo, evitar el desplazamiento de la página)
-        event.stopPropagation();   
-    });
-
-    document.addEventListener('wheel',function(event){
-        cerrarMenu();
+        //cerrarMenu();
+        
+        const menu = document.getElementById('menu-contextual');
+        if (!menu.contains(event.target)) {    //HAY QUE MODIFICAR PARA HACER if event.target == algun menu.Children
+            cerrarMenu();                           // Si no movemos la rueda dentro del menú contextual, se cierra
+        }
+        
     });
 
     menuContextual.addEventListener('contextmenu', function(event) {
+        event.preventDefault();  // Prevenir el comportamiento por defecto (por ejemplo, evitar el desplazamiento de la página)
+        alert('cerrar menu?');  // casi funciona hasta aquí
+        //código añadido para distinguir si se ha producido en un descendiente del menú o en el menú en sí mismo.
+
+
+     });
+
+    /*
+    document.getElementById('lista-compra').addEventListener('contextmenu', function(event) {
         // Prevenir el menú contextual por defecto
         event.preventDefault();
-        event.stopPropagation();
         const menu = document.getElementById('menu-contextual');
         if (!menu.contains(event.target)) {  
             cerrarMenu();                           // Si hacemos click derecho de menú contextual fuera del menú
         }
     });
+*/    
+
+
+
+
 
 
 
@@ -234,21 +254,6 @@ document.getElementById('opcion-eliminar').addEventListener('click', function() 
  * Nota: Para calcular si ha llegado al final de la página comprueba que la propiedad scrollY más la altura de la zona de renderizado 
  * sea mayor o igual que la propiedad scrollHeight de documentElement, perteneciente a document.
  */
-window.addEventListener('scroll', function() {
-    // Verificar si se ha llegado al final de la página
-    if (window.scrollY + window.innerHeight > document.documentElement.scrollHeight - 5) { //Restamos un poco para que funcione
-        // Crear el nuevo elemento <p>
-        const nuevoElemento = document.createElement('p');
-        nuevoElemento.style.height = '100px';
-        
-        // Obtener la fecha y hora actuales
-        const fechaHora = new Date().toLocaleString();
-        nuevoElemento.textContent = `Nuevo contenido - ${fechaHora}`;
-        
-        // Agregar el nuevo elemento al final del body
-        document.body.appendChild(nuevoElemento);
-    }
-});
 
 
 }); // CERRAMOS EL DOMContentLoader
