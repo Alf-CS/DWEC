@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let labelElement = document.createElement('label');       // Crear el elemento <label>
             let checkboxElement = document.createElement('input');    // Crear el checkbox
             checkboxElement.setAttribute('type', 'checkbox');                   // Establecer tipo checkbox
-            checkboxElement.checked = true;                                     // Vamos a marcar el producto que añadimos
+            // checkboxElement.checked = true;                                     // Vamos a marcar el producto que añadimos -- Conflicto con apartado 7
             let labelText = document.createTextNode(nuevoElemento);   // Crear el texto del producto
             labelElement.appendChild(checkboxElement);                // Añadir el checkbox dentro del label
             labelElement.appendChild(labelText);                      // Añadir el nombre del producto al label
@@ -223,7 +223,55 @@ document.getElementById('opcion-eliminar').addEventListener('click', function() 
  * !!! Atención: iterar colecciones vivas mientras se añaden/eliminan elementos a esa colección viva es problemático. Puedes transformar una colección viva a array mediante Array.from
  */
 
+// Array para almacenar los elementos seleccionados
+const elementosSeleccionados = [];
 
+// Seleccionar todos los elementos <li> de la lista
+const listaCompra = document.querySelectorAll('#lista-compra li');
+
+listaCompra.forEach(item => {
+    item.addEventListener('click', function(event) {
+        // Prevenir la acción por defecto del checkbox
+        event.preventDefault();
+
+        // Verificar si la tecla Shift está presionada
+        if (event.shiftKey) {
+            if (elementosSeleccionados.includes(item)) {
+                // Si el elemento ya está seleccionado, quitar la clase y deseleccionar
+                const index = elementosSeleccionados.indexOf(item);
+                elementosSeleccionados.splice(index, 1);
+                item.classList.remove('selected'); // Quitar clase selected
+            } else {
+                // Si no está en seleccionados, añadir la clase y seleccionarlo
+                elementosSeleccionados.push(item);
+                item.classList.add('selected');    // Añadir clase selected
+            }
+        } else {
+            // Si no hay teclas modificadoras, limpiar todas las selecciones
+            elementosSeleccionados.forEach(el => el.classList.remove('selected'));
+            elementosSeleccionados.length = 0; // Vaciar el array de seleccionados
+
+            // Seleccionar solo el elemento actual
+            if (!item.classList.contains('selected')) {
+                elementosSeleccionados.push(item);
+                item.classList.add('selected');  // Añadir clase selected
+            }
+        }
+
+        // Sincronizar el estado de todos los checkboxes con la clase "selected"
+        
+        setTimeout(() => {
+            listaCompra.forEach(li => {
+                const checkbox = li.querySelector('input[type="checkbox"]');
+                if (li.classList.contains('selected')) {
+                    checkbox.checked = true;  // Marcar el checkbox
+                } else {
+                    checkbox.checked = false; // Desmarcar el checkbox
+                }
+            });
+        }, 0);
+    });
+});
 
                 
 /**
@@ -234,21 +282,22 @@ document.getElementById('opcion-eliminar').addEventListener('click', function() 
  * Nota: Para calcular si ha llegado al final de la página comprueba que la propiedad scrollY más la altura de la zona de renderizado 
  * sea mayor o igual que la propiedad scrollHeight de documentElement, perteneciente a document.
  */
-window.addEventListener('scroll', function() {
-    // Verificar si se ha llegado al final de la página
-    if (window.scrollY + window.innerHeight > document.documentElement.scrollHeight - 5) { //Restamos un poco para que funcione
-        // Crear el nuevo elemento <p>
-        const nuevoElemento = document.createElement('p');
-        nuevoElemento.style.height = '100px';
-        
-        // Obtener la fecha y hora actuales
-        const fechaHora = new Date().toLocaleString();
-        nuevoElemento.textContent = `Nuevo contenido - ${fechaHora}`;
-        
-        // Agregar el nuevo elemento al final del body
-        document.body.appendChild(nuevoElemento);
-    }
-});
+    window.addEventListener('scroll', function() {
+        // Verificar si se ha llegado al final de la página
+        //if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) { //ESTO NO FUNCIONA
+        if (window.scrollY + window.innerHeight > document.documentElement.scrollHeight - 5) { //Restamos un poco para que funcione
+            // Crear el nuevo elemento <p>
+            const nuevoElemento = document.createElement('p');
+            nuevoElemento.style.height = '100px';
+            
+            // Obtener la fecha y hora actuales
+            const fechaHora = new Date().toLocaleString();
+            nuevoElemento.textContent = `Nuevo contenido - ${fechaHora}`;
+            
+            // Agregar el nuevo elemento al final del body
+            document.body.appendChild(nuevoElemento);
+        }
+    });
 
 
 }); // CERRAMOS EL DOMContentLoader
