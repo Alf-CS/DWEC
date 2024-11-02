@@ -10,7 +10,7 @@
 <body>
     <main>
         <h1>Gestión de usuarios</h1>
-        <form id="user-form">
+        <form id="user-form" novalidate>
             <fieldset name="client">
                 <legend>Datos del cliente</legend>
                 <label>Nombre y apellidos <input placeholder="Nombre Apellido Apellido"><span class="error-text"></span></label>
@@ -18,7 +18,7 @@
                 <label>Teléfono: <input placeholder="000-00-00-00"><span class="error-text"></span></label>
                 <span>
                     Género <label><input type="radio"> Masculino</label>
-                    <label><input type="radio"> Femenino <span class="error-text"></span></label>
+                    <label><input type="radio"> Femenino <span class="error-text" id="genero-error"></span></label>  
                 </span>
                 
                 <fieldset name="address">
