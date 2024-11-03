@@ -17,8 +17,8 @@
                 <label>DNI <input placeholder="00000000-A"><span class="error-text"></span></label>
                 <label>Teléfono: <input placeholder="000-00-00-00"><span class="error-text"></span></label>
                 <span>
-                    Género <label><input type="radio"> Masculino</label>
-                    <label><input type="radio"> Femenino <span class="error-text" id="genero-error"></span></label>  
+                    Género <label><input type="radio" id="genero-masculino"> Masculino</label>
+                    <label><input type="radio" id="genero-femenino"> Femenino <span class="error-text" id="genero-error"></span></label>  
                 </span>
                 
                 <fieldset name="address">
@@ -33,8 +33,8 @@
             <fieldset name="account">
                 <legend>Datos de la cuenta</legend>
                 <label>Nombre de usuario <input placeholder="nombre-usuario"><span class="error-text"></span></label>
-                <label>Email <input placeholder="example@mail.com"><span class="error-text"></span></label>
-                <label>Repetir email <input placeholder="example@mail.com"><span class="error-text"></span></label>
+                <label>Email <input placeholder="example@mail.com" id="email"><span class="error-text"></span></label>
+                <label>Repetir email <input placeholder="example@mail.com" id="repeat-email"><span class="error-text"></span></label>
                 <fieldset name="interests">
                     <legend>Intereses</legend>
                     <label><input type="checkbox"> Futbol</label>
