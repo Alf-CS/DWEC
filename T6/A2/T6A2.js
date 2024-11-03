@@ -73,11 +73,14 @@ document.addEventListener("DOMContentLoaded", () => {
        validarDNI();
        validarTelefono();
        validarGenero();
-       */
        validarNombreUsuario();
        validarEMail();    
        verificarCoincidenciaEmail(); //-- CASI lo manejamos mediante el input, pero hace falta para coger la tecla ENTER o la pulsacion sobre "REGISTRAR"
+       */
+       validarCodigoPostal();
        validarIntereses();
+       validarTerminos();
+       
        
        
        agregarUsuario();
@@ -174,6 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     };
         }
 
+
+        
+
         function validarNombreUsuario() {
             const nombreUsuarioValue = nombreUsuario.value.trim();
             const nombreUsuarioPattern = /^[a-zA-Z0-9][a-zA-Z0-9._-]*[a-zA-Z0-9]$/;
@@ -215,6 +221,51 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         
+        function validarCodigoPostal() {
+            const cpInput = form.querySelector("input[placeholder='00000']");
+            //const cpInput = document.getElementById("codigo-postal");
+            // const errorText = cpInput.nextElementSibling; -- Aquí no tenemos un <span> a continuación
+            const cpPattern = /^\d{5}$/; // Expresión regular para cinco dígitos
+        
+            // Verifica si el valor del campo CP coincide con el patrón
+            console.log ("codigo postal: ", cpInput.value);   // TEST - BORRAR
+            if (!cpPattern.test(cpInput.value.trim())) {
+                cpInput.classList.add("error");    //Añade la clase error 
+                muestraFormIsValid("El código postal es erróneo");
+                formIsValid=false;
+                // Vamos a añadir un elemento <span> a continuación para poner el mensaje de error.
+                let errorSpan = cpInput.nextElementSibling;
+                if (errorSpan) {
+                    cpInput.nextElementSibling.remove();
+                }
+                errorSpan=cpInput.nextElementSibling;
+                if (!errorSpan) {
+                    // Crea el elemento <span> si no existe
+                    errorSpan = document.createElement("span");
+                    //errorSpan.textContent = "El código postal debe tener exactamente 5 cifras.";
+                    cpInput.parentNode.appendChild(errorSpan); // Inserta después del input
+                    //cpInput.parentNode.insertBefore(errorSpan, cpInput.nextSibling);
+                    
+                    //cpInput.classList.add("error");
+                    errorSpan.classList.add("error-text");
+                    mostrarError(cpInput, "El código postal TIENE que tener exactamente 5 cifras");
+                }
+            } else {
+                // Remueve el mensaje de error si existe
+                let errorSpan = cpInput.nextElementSibling;
+                cpInput.classList.remove("error"); // Quita la clase "error"  cuando el CP sea válido
+                if (errorSpan){
+                    errorSpan.remove();
+                }
+                
+            }
+        }
+
+
+
+
+
+
 
 
         function validarIntereses() {
@@ -236,13 +287,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
             
        
+        function validarTerminos() {
+            const terminosCheckbox = document.getElementById("terminos");
+            // const errorText = terminosCheckbox.nextElementSibling; no es necesario
+        
+            // Verifica si el checkbox no está marcado
+            if (!terminosCheckbox.checked) {
+                formIsValid=false;                                              // NO PASA la verificación
+                mostrarError(terminosCheckbox, "Debe aceptar los TERMINOS del servicio"); // errorText.textContent = "Debes aceptar los términos del servicio.";
 
-
-
-
-
-
-
+            } else {
+                limpiarError(terminosCheckbox)   //errorText.textContent = ""; // Limpia el mensaje de error si está marcado
+            }
+        }
+        
         
 
 
@@ -329,7 +387,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     function mostrarError(input, mensaje) {
-        const errorText = input.nextElementSibling;         // seleccionamos el span siguiente  - Con los botones radio esto se complica
+        const errorText = input.nextElementSibling;         // seleccionamos el span siguiente  - Con los botones radio esto se complica --> añadimos ids
         errorText.textContent = mensaje;                    // Añade el mensaje de error al span
         input.classList.add("error");                       // Añadir la clase 'error' al input para aplicar el estilo
     }
