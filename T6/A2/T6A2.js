@@ -20,6 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
     comunidadSelect.addEventListener("change", (event) => {
     const comunidadCodigo = event.target.value;
     cargarProvincias(comunidadCodigo); // Carga las provincias según la comunidad seleccionada
+    municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';  
+
     });
 
     // Selecciona el elemento id="municipio" en el formulario
@@ -65,18 +67,16 @@ document.addEventListener("DOMContentLoaded", () => {
         // Validación en tiempo real
         repeatEmailInput.addEventListener("input", verificarCoincidenciaEmail);
 
-        // nombreCompleto.addEventListener("blur", validarNombre); // ESTO SI QUE FUNCIONA - SIN PARENTESIS EN LA FUNCION  -- Funciona a ratos ????
+        nombreCompleto.addEventListener("blur", validarNombre); // ESTO SI QUE FUNCIONA - SIN PARENTESIS EN LA FUNCION  -- Funciona a ratos ????
 
        
        validarNombre();
-       /*
        validarDNI();
        validarTelefono();
        validarGenero();
        validarNombreUsuario();
        validarEMail();    
        verificarCoincidenciaEmail(); //-- CASI lo manejamos mediante el input, pero hace falta para coger la tecla ENTER o la pulsacion sobre "REGISTRAR"
-       */
        validarCodigoPostal();
        validarIntereses();
        validarTerminos();
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 limpiarError(email);
             }
         }
-        // email.addEventListener("blur", validarEMail);  // no funcionaba con parentesis
+        email.addEventListener("blur", validarEMail);  // no funcionaba con parentesis
 
         
         function verificarCoincidenciaEmail() {
@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         function cargarMunicipios(provinciaCodigo) {
             // Borramos las que hay de antes.
-            municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';  // Al cambiar de comunidad, hay que eliminar las provincias anteriores.
+            municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';  // Al cambiar de provincia, hay que eliminar los municipios anteriores.
                 // Agregamos una opción en blanco al inicio?
                     /*
                     const emptyOption = document.createElement("option");
