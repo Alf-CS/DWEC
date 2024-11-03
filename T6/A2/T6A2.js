@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const repeatEmailInput = document.getElementById("repeat-email");
         
 
-        let formIsValid = true;  // false??                                     //INICIALMENTE, el formulario es VÁLIDO, HASTA QUE ALGO FALLE
+        let formIsValid = true;                                      //INICIALMENTE, el formulario es VÁLIDO, HASTA QUE ALGO FALLE
         
         muestraFormIsValid("Establecemos a TRUE al iniciar validarFormulario");                                 //BORRAR
 
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Validación en tiempo real
         repeatEmailInput.addEventListener("input", verificarCoincidenciaEmail);
 
-        nombreCompleto.addEventListener("blur", validarNombre); // ESTO SI QUE FUNCIONA - SIN PARENTESIS EN LA FUNCION  -- Funciona a ratos ????
+        nombreCompleto.addEventListener("blur", validarNombre); // ESTO SI QUE FUNCIONA - SIN PARENTESIS EN LA FUNCION 
 
        
        validarNombre();
@@ -76,12 +76,10 @@ document.addEventListener("DOMContentLoaded", () => {
        validarGenero();
        validarNombreUsuario();
        validarEMail();    
-       verificarCoincidenciaEmail(); //-- CASI lo manejamos mediante el input, pero hace falta para coger la tecla ENTER o la pulsacion sobre "REGISTRAR"
+       verificarCoincidenciaEmail(); //-- CASI lo manejamos mediante el evento de cambio en el input, pero hace falta para coger la tecla ENTER o la pulsacion sobre "REGISTRAR"
        validarCodigoPostal();
        validarIntereses();
        validarTerminos();
-       
-       
        
        agregarUsuario();
 
@@ -98,12 +96,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     `;
                 usersList.appendChild(newRow);
                 console.log("usuario creado");
-                // form.reset(); 
                 const errors = form.querySelectorAll(".error-text");
                 errors.forEach(error => error.textContent = "");
                 const inputs =form.querySelectorAll("input");
                 inputs.forEach(input => input.classList.remove("error"));
-                form.reset() //¿mejor aquí?
+                form.reset()
             }
         }
 
