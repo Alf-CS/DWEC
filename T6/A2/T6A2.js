@@ -1,6 +1,34 @@
+import { comunidades } from './T6A2-comunidades.js';        // Importa el array de comunidades
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("user-form");
     const usersList = document.getElementById("users-list").querySelector("tbody");
+    
+    // Selecciona el elemento id="comunidad" en el formulario
+    const comunidadSelect= document.getElementById("comunidad");
+  
+    // Llamamos a la función cargarComunidades al cargar la página
+    cargarComunidades();     
+
+            // Función para cargar las opciones en el <select>
+            function cargarComunidades() {
+                // Agregamos una opción en blanco al inicio
+                const emptyOption = document.createElement("option");
+                emptyOption.value = "";  // Valor vacío
+                emptyOption.textContent = "";  // Texto vacío
+                comunidadSelect.appendChild(emptyOption);  // Añade al <select>
+            
+                // Añadimos las opciones de comunidades
+                comunidades.forEach(comunidad => {
+                    const option = document.createElement("option");
+                    option.value = comunidad.codigo;
+                    option.textContent = comunidad.nombre;
+                    comunidadSelect.appendChild(option);
+                });
+            }
+
 
     form.addEventListener("submit", (event) => {
         event.preventDefault(); 
@@ -33,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Validación en tiempo real
         repeatEmailInput.addEventListener("input", verificarCoincidenciaEmail);
 
-        nombreCompleto.addEventListener("blur", validarNombre); // ESTO SI QUE FUNCIONA - SIN PARENTESIS EN LA FUNCION  -- Funciona a ratos ????
+        // nombreCompleto.addEventListener("blur", validarNombre); // ESTO SI QUE FUNCIONA - SIN PARENTESIS EN LA FUNCION  -- Funciona a ratos ????
 
        
        validarNombre();
@@ -42,11 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
        validarTelefono();
        validarGenero();
        */
-       validarEMail();
-       /*
        validarNombreUsuario();
+       validarEMail();    
        verificarCoincidenciaEmail(); //-- CASI lo manejamos mediante el input, pero hace falta para coger la tecla ENTER o la pulsacion sobre "REGISTRAR"
-       */
+       
        
        
        agregarUsuario();
@@ -143,7 +170,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     };
         }
 
-
+        function validarNombreUsuario() {
+            const nombreUsuarioValue = nombreUsuario.value.trim();
+            const nombreUsuarioPattern = /^[a-zA-Z0-9][a-zA-Z0-9._-]*[a-zA-Z0-9]$/;
+            if (!nombreUsuarioPattern.test(nombreUsuarioValue)) {
+                mostrarError(nombreUsuario, "Debe comenzar y terminar con letras o números. Puede contener '.', '-', '_'");
+                formIsValid=false;
+                muestraFormIsValid ("Nombre de usuario incorrecto");
+            } else {
+                limpiarError(nombreUsuario);
+            }
+        }
+        // nombreUsuario.addEventListener("blur", validarNombreUsuario);
 
         function validarEMail() {
             const emailValue = emailInput.value.trim();
@@ -157,31 +195,34 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
         // email.addEventListener("blur", validarEMail);  // no funcionaba con parentesis
-    
 
-        function validarNombreUsuario() {
-            const nombreUsuarioValue = nombreUsuario.value.trim();
-            const nombreUsuarioPattern = /^[a-zA-Z0-9][a-zA-Z0-9._-]*[a-zA-Z0-9]$/;
-        
-            if (!nombreUsuarioPattern.test(nombreUsuarioValue)) {
-                mostrarError(nombreUsuario, "El nombre de usuario debe comenzar y terminar con letras o números, y solo puede contener '.', '-', '_'.");
-            } else {
-                limpiarError(nombreUsuario);
-            }
-        }
-        // nombreUsuario.addEventListener("blur", validarNombreUsuario);
         
         function verificarCoincidenciaEmail() {
             if (emailInput.value !== repeatEmailInput.value) {
                 mostrarError(repeatEmailInput, "Los correos electrónicos no coinciden.");
                 repeatEmailInput.classList.add("error");
                 formIsValid=false;
+                muestraFormIsValid ("No hay coincidencia en la verificación de email")  // BORRAR
             } else {
                 limpiarError(repeatEmailInput);
-                console.log("emails coinciden");
+                muestraFormIsValid ("emails coinciden");                                        // BORRAR
                 //repeatEmailInput.classList.remove("error");
             }
         }
+
+
+
+
+
+
+
+        // FUNCIONES DE CARGA DE LAS OPCIONES CONTEMPLADAS EN OTROS MODULOS JS 
+        
+
+
+
+
+        // funciones AUXILIARES PARA DEPURACION Y TESTs
 
         function muestraFormIsValid(mensaje){    //Función auxiliar para DEPURACION                             // BORRAR
             console.log(mensaje);
@@ -192,6 +233,10 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("formIsValid:", formIsValid);
         }
     }
+
+
+
+
 
     function mostrarError(input, mensaje) {
         const errorText = input.nextElementSibling;         // seleccionamos el span siguiente  - Con los botones radio esto se complica
@@ -209,6 +254,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const errors = form.querySelectorAll(".error-text");
         errors.forEach(error => error.textContent = "");
     });
+
+
+
 });
 
 
