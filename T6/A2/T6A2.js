@@ -1,7 +1,8 @@
 import { comunidades } from './T6A2-comunidades.js';        // Importa el array de comunidades
+import { provincias } from './T6A2-provincias.js';        // Importa el array de provincias
+import { municipios } from './T6A2-municipios.js';        // Importa el array de municipios
 
-
-
+     
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("user-form");
     const usersList = document.getElementById("users-list").querySelector("tbody");
@@ -12,22 +13,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // Llamamos a la función cargarComunidades al cargar la página
     cargarComunidades();     
 
-            // Función para cargar las opciones en el <select>
-            function cargarComunidades() {
-                // Agregamos una opción en blanco al inicio
-                const emptyOption = document.createElement("option");
-                emptyOption.value = "";  // Valor vacío
-                emptyOption.textContent = "";  // Texto vacío
-                comunidadSelect.appendChild(emptyOption);  // Añade al <select>
-            
-                // Añadimos las opciones de comunidades
-                comunidades.forEach(comunidad => {
-                    const option = document.createElement("option");
-                    option.value = comunidad.codigo;
-                    option.textContent = comunidad.nombre;
-                    comunidadSelect.appendChild(option);
-                });
-            }
+    // Selecciona el elemento id="provincias en el formulario
+    const provinciaSelect= document.getElementById("provincia");
+  
+    // Llamamos a la función cargarProvinicas al seleccionar Comunidad
+    comunidadSelect.addEventListener("change", (event) => {
+    const comunidadCodigo = event.target.value;
+    cargarProvincias(comunidadCodigo); // Carga las provincias según la comunidad seleccionada
+    });
+
+    // Selecciona el elemento id="municipio" en el formulario
+    const municipioSelect= document.getElementById("municipio");
+  
+    // Llamamos a la función cargarMunicipios al seleccionar Provincia
+    provinciaSelect.addEventListener("change", (event) => {
+    const provinciaCodigo = event.target.value;
+    cargarMunicipios(provinciaCodigo); // Carga los municipios según la Provincia seleccionada
+    });
+
+
 
 
     form.addEventListener("submit", (event) => {
@@ -73,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
        validarNombreUsuario();
        validarEMail();    
        verificarCoincidenciaEmail(); //-- CASI lo manejamos mediante el input, pero hace falta para coger la tecla ENTER o la pulsacion sobre "REGISTRAR"
-       
+       validarIntereses();
        
        
        agregarUsuario();
@@ -210,15 +214,36 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-
-
-
-
-
-
-        // FUNCIONES DE CARGA DE LAS OPCIONES CONTEMPLADAS EN OTROS MODULOS JS 
         
 
+
+        function validarIntereses() {
+            // Selecciona todos los checkboxes dentro del fieldset de intereses
+            const intereses = document.querySelectorAll("fieldset[name='interests'] input[type='checkbox']");
+            const errorText = document.querySelector("fieldset[name='interests'] .error-text");
+        
+            // Filtra los checkboxes seleccionados
+            const seleccionados = Array.from(intereses).filter(checkbox => checkbox.checked);
+            
+            // Verifica si el número de seleccionados es menor a 3
+            if (seleccionados.length < 3) {
+                errorText.textContent = "Selecciona al menos 3 intereses.";
+                formIsValid=false;
+                muestraFormIsValid("Intereses son menos de 3");                         //BORRAR
+            } else {
+                errorText.textContent = ""; // Borramos el mensaje de error si se cumple la condición
+            }
+        }
+            
+       
+
+
+
+
+
+
+
+        
 
 
 
@@ -233,6 +258,71 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("formIsValid:", formIsValid);
         }
     }
+
+
+
+    // FUNCIONES DE CARGA DE LAS OPCIONES CONTEMPLADAS para los desplegables en los selects  EN OTROS MODULOS JS 
+        
+        // Función para cargar las opciones en el <select>
+        function cargarComunidades() {
+            // Agregamos una opción en blanco al inicio
+            const emptyOption = document.createElement("option");
+            emptyOption.value = "";  // Valor vacío
+            emptyOption.textContent = "";  // Texto vacío
+            comunidadSelect.appendChild(emptyOption);  // Añade al <select>
+        
+            // Añadimos las opciones de comunidades
+            comunidades.forEach(comunidad => {
+                const option = document.createElement("option");
+                option.value = comunidad.codigo;
+                option.textContent = comunidad.nombre;
+                comunidadSelect.appendChild(option);
+            });
+        }
+
+        
+        function cargarProvincias(comunidadCodigo) {
+            // Borramos las que hay de antes.
+            provinciaSelect.innerHTML = '<option value="">Seleccione una provincia</option>';  // Al cambiar de comunidad, hay que eliminar las provincias anteriores.
+                // Agregamos una opción en blanco al inicio?
+                    /*
+                    const emptyOption = document.createElement("option");
+                    emptyOption.value = "";  // Valor vacío
+                    emptyOption.textContent = "";  // Texto vacío
+                    provinciaSelect.appendChild(emptyOption);  // Añade al <select>
+                    */
+            // Añadimos las opciones de la Comunidad Seleccionada
+            const provinciasFiltradas = provincias.filter(provincia => provincia.comunidad === comunidadCodigo);
+            provinciasFiltradas.forEach(provincia => {
+                const option = document.createElement("option");
+                option.value = provincia.codigo;
+                option.textContent = provincia.nombre;
+                provinciaSelect.appendChild(option);
+            });
+        }
+         
+        
+        function cargarMunicipios(provinciaCodigo) {
+            // Borramos las que hay de antes.
+            municipioSelect.innerHTML = '<option value="">Seleccione un municipio</option>';  // Al cambiar de comunidad, hay que eliminar las provincias anteriores.
+                // Agregamos una opción en blanco al inicio?
+                    /*
+                    const emptyOption = document.createElement("option");
+                    emptyOption.value = "";  // Valor vacío
+                    emptyOption.textContent = "";  // Texto vacío
+                    provinciaSelect.appendChild(emptyOption);  // Añade al <select>
+                    */
+            // Añadimos las opciones de la Comunidad Seleccionada
+            const municipiosFiltrados = municipios.filter(municipio => municipio.provincia === provinciaCodigo);
+            municipiosFiltrados.forEach(municipio => {
+                const option = document.createElement("option");
+                option.value = municipio.codigo;
+                option.textContent = municipio.nombre;
+                municipioSelect.appendChild(option);
+            });
+        }
+         
+        
 
 
 
@@ -254,7 +344,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const errors = form.querySelectorAll(".error-text");
         errors.forEach(error => error.textContent = "");
     });
-
 
 
 });
