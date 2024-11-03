@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Selecciona el elemento id="provincias en el formulario
     const provinciaSelect= document.getElementById("provincia");
   
-    // Llamamos a la función cargarProvinicas al seleccionar Comunidad
+    // Llamamos a la función cargarProvincias al seleccionar Comunidad
     comunidadSelect.addEventListener("change", (event) => {
     const comunidadCodigo = event.target.value;
     cargarProvincias(comunidadCodigo); // Carga las provincias según la comunidad seleccionada
@@ -223,35 +223,29 @@ document.addEventListener("DOMContentLoaded", () => {
         
         function validarCodigoPostal() {
             const cpInput = form.querySelector("input[placeholder='00000']");
-            //const cpInput = document.getElementById("codigo-postal");
-            // const errorText = cpInput.nextElementSibling; -- Aquí no tenemos un <span> a continuación
+            //const cpInput = document.getElementById("codigo-postal");            
+            // const errorText = cpInput.nextElementSibling; -- Aquí no tenemos un <span> a continuación, por lo que no sirve la solución que ya tenemos.
             const cpPattern = /^\d{5}$/; // Expresión regular para cinco dígitos
-        
+
             // Verifica si el valor del campo CP coincide con el patrón
             console.log ("codigo postal: ", cpInput.value);   // TEST - BORRAR
             if (!cpPattern.test(cpInput.value.trim())) {
                 cpInput.classList.add("error");    //Añade la clase error 
                 muestraFormIsValid("El código postal es erróneo");
                 formIsValid=false;
-                // Vamos a añadir un elemento <span> a continuación para poner el mensaje de error.
+                // Vamos a añadir un elemento <span> a continuación para poner el mensaje de error.  //MUCHO MÁS FACIL AÑADIR UN SPAN EN EL INPUT EN EL HTML
                 let errorSpan = cpInput.nextElementSibling;
                 if (errorSpan) {
                     cpInput.nextElementSibling.remove();
                 }
                 errorSpan=cpInput.nextElementSibling;
                 if (!errorSpan) {
-                    // Crea el elemento <span> si no existe
-                    errorSpan = document.createElement("span");
-                    //errorSpan.textContent = "El código postal debe tener exactamente 5 cifras.";
+                    errorSpan = document.createElement("span");   // Crea el elemento <span> si no existe
                     cpInput.parentNode.appendChild(errorSpan); // Inserta después del input
-                    //cpInput.parentNode.insertBefore(errorSpan, cpInput.nextSibling);
-                    
-                    //cpInput.classList.add("error");
                     errorSpan.classList.add("error-text");
                     mostrarError(cpInput, "El código postal TIENE que tener exactamente 5 cifras");
                 }
-            } else {
-                // Remueve el mensaje de error si existe
+            } else {   // Quitamos el mensaje de error si existe --> eliminamos el <span> que hemos creado
                 let errorSpan = cpInput.nextElementSibling;
                 cpInput.classList.remove("error"); // Quita la clase "error"  cuando el CP sea válido
                 if (errorSpan){
@@ -260,12 +254,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 
             }
         }
-
-
-
-
-
-
 
 
         function validarIntereses() {
@@ -346,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     /*
                     const emptyOption = document.createElement("option");
                     emptyOption.value = "";  // Valor vacío
-                    emptyOption.textContent = "";  // Texto vacío
+                    emptyOption.textContent = "Seleccione una provincia";  // También puede ser texto vacío
                     provinciaSelect.appendChild(emptyOption);  // Añade al <select>
                     */
             // Añadimos las opciones de la Comunidad Seleccionada
@@ -396,6 +384,8 @@ document.addEventListener("DOMContentLoaded", () => {
         errorText.textContent = "";                                 // Limpia el mensaje de error
         input.classList.remove("error");                            // Quitar la clase 'error' del input si los datos son correctos
     }
+
+
     form.querySelector("input[value='Reiniciar']").addEventListener("click", (event) => {
         event.preventDefault(); 
         form.reset();
